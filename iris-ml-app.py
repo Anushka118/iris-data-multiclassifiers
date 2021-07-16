@@ -37,7 +37,7 @@ X = iris.data
 Y = iris.target
 
 st.subheader('Class labels and their corresponding index number')
-    st.write(iris.target_names)
+st.write(iris.target_names)
 
 def predicting(clf):
     clf.fit(X,Y)
