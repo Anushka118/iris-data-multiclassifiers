@@ -6,6 +6,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+from sklearn.linear_model import LogisticRegression
 
 st.write("""
 # Iris Flower Prediction Using Different Classifiers
@@ -42,26 +44,31 @@ st.write(iris.target_names)
 def predicting(clf):
     clf.fit(X,Y)
     prediction = clf.predict(df)
-
-    st.subheader('Prediction')
-    st.write(iris.target_names[prediction])
+    st.write('''**Prediction: **'''+ iris.target_names[prediction][0])
 
 def DTC():
     clf = DecisionTreeClassifier()
-    prediction = predicting(clf)
+    predicting(clf)
 
 def GNBC():
     clf = GaussianNB()
-    prediction = predicting(clf)
+    predicting(clf)
 
 def RFC():
     clf = RandomForestClassifier()
-    prediction = predicting(clf)
+    predicting(clf)
 
 def KNC():
     clf = KNeighborsClassifier(n_neighbors = 3)
-    prediction = predicting(clf)
+    predicting(clf)
 
+def SVMC():
+    clf = SVC(kernel = 'linear')
+    predicting(clf)
+
+def LR():
+    clf = LogisticRegression(solver = 'newton-cg')
+    predicting(clf)
 
 if st.button('Use Decision Tree Classifier'):
     DTC()
@@ -77,9 +84,14 @@ if st.button('Use Random Forest Classifier'):
 if st.button('Use K-Neighbors Classifier'):
     KNC()
 
-
+if st.button('Use Linear SVC'):
+    SVMC()
+    
+if st.button('Use Logistic Regression'):
+    LR()
+    
 if st.button('Summary'):
-    classifiers = ['Decision Tree','Naive Bayes', 'Random Forest', 'K-Neighbors']
+    classifiers = ['Decision Tree','Naive Bayes', 'Random Forest', 'K-Neighbors','Linear SVC', 'Logistic Regression']
     predicted_values = []
     clf = DecisionTreeClassifier()
     clf.fit(X,Y)
@@ -96,9 +108,14 @@ if st.button('Summary'):
     clf = KNeighborsClassifier(n_neighbors = 3)
     clf.fit(X,Y)
     predicted_values = np.concatenate([predicted_values,iris.target_names[clf.predict(df)]])
+    
+    clf = SVC(kernel = 'linear')
+    clf.fit(X,Y)
+    predicted_values = np.concatenate([predicted_values,iris.target_names[clf.predict(df)]])
 
+    clf = LogisticRegression(solver = 'newton-cg')
+    clf.fit(X,Y)
+    predicted_values = np.concatenate([predicted_values,iris.target_names[clf.predict(df)]])
+    
     predicted_values_df = pd.DataFrame(predicted_values, columns= ['Prediction'],index = classifiers)
     st.dataframe(predicted_values_df)
-    
-    
-
