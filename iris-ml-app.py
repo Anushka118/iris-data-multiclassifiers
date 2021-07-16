@@ -8,7 +8,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 
 st.write("""
-# Simple Iris Flower Prediction App
+# Iris Flower Prediction Using Different Classifiers
 
 This app predicts the **Iris flower** type!
 """)
